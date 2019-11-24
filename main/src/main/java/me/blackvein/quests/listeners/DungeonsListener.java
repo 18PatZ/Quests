@@ -25,37 +25,50 @@ import de.erethon.dungeonsxl.event.dplayer.DPlayerLeaveDGroupEvent;
 import me.blackvein.quests.util.Lang;
 
 public class DungeonsListener implements Listener {
-	@EventHandler
-	public void onGroupCreate(DGroupCreateEvent event) {
-		event.getCreator().sendMessage(ChatColor.YELLOW + Lang.get("questDungeonsCreate"));
-	}
-	
-	@EventHandler
-	public void onGroupDisbandEvent(DGroupDisbandEvent event) {
-		event.getDisbander().sendMessage(ChatColor.RED + Lang.get("questDungeonsDisband"));
-	}
-	
-	@EventHandler
-	public void onPlayerJoinEvent(DPlayerJoinDGroupEvent event) {
-		if (event.getDGroup() != null && event.getDPlayer() != null) {
-			Player i = event.getDGroup().getCaptain();
-			Player p = event.getDPlayer().getPlayer();
-			if (i != null && p != null) {
-				i.sendMessage(ChatColor.GREEN + Lang.get(i, "questDungeonsInvite").replace("<player>", p.getName()));
-				p.sendMessage(ChatColor.GREEN + Lang.get(p, "questDungeonsJoin").replace("<player>", i.getName()));
-			}
-		}
-	}
-	
-	@EventHandler
-	public void onPlayerLeaveEvent(DPlayerLeaveDGroupEvent event) {
-		if (event.getDGroup() != null && event.getDPlayer() != null) {
-			Player k = event.getDGroup().getCaptain();
-			Player p = event.getDPlayer().getPlayer();
-			if (k != null && p != null) {
-				k.sendMessage(ChatColor.RED + Lang.get(k, "questDungeonsKicked").replace("<player>", k.getName()));
-				p.sendMessage(ChatColor.RED + Lang.get(p, "questDungeonsLeave").replace("<player>", p.getName()));
-			}
-		}
-	}
+    @EventHandler
+    public void onGroupCreate(DGroupCreateEvent event) {
+        if (Lang.get("questDungeonsCreate").length() > 0) {
+            event.getCreator().sendMessage(ChatColor.YELLOW + Lang.get("questDungeonsCreate"));
+        }
+    }
+    
+    @EventHandler
+    public void onGroupDisbandEvent(DGroupDisbandEvent event) {
+        if (Lang.get("questDungeonsDisband").length() > 0) {
+            event.getDisbander().sendMessage(ChatColor.RED + Lang.get("questDungeonsDisband"));
+        }
+    }
+    
+    @EventHandler
+    public void onPlayerJoinEvent(DPlayerJoinDGroupEvent event) {
+        if (event.getDGroup() != null && event.getDPlayer() != null) {
+            Player i = event.getDGroup().getCaptain();
+            Player p = event.getDPlayer().getPlayer();
+            if (i != null && p != null) {
+                if (Lang.get("questDungeonsInvite").length() > 0) {
+                    i.sendMessage(ChatColor.GREEN + Lang.get(i, "questDungeonsInvite")
+                            .replace("<player>", p.getName()));
+                }
+                if (Lang.get("questDungeonsJoin").length() > 0) {
+                    p.sendMessage(ChatColor.GREEN + Lang.get(p, "questDungeonsJoin").replace("<player>", i.getName()));
+                }
+            }
+        }
+    }
+    
+    @EventHandler
+    public void onPlayerLeaveEvent(DPlayerLeaveDGroupEvent event) {
+        if (event.getDGroup() != null && event.getDPlayer() != null) {
+            Player k = event.getDGroup().getCaptain();
+            Player p = event.getDPlayer().getPlayer();
+            if (k != null && p != null) {
+                if (Lang.get("questDungeonsKicked").length() > 0) {
+                    k.sendMessage(ChatColor.RED + Lang.get(k, "questDungeonsKicked").replace("<player>", k.getName()));
+                }
+                if (Lang.get("questDungeonsLeave").length() > 0) {
+                    p.sendMessage(ChatColor.RED + Lang.get(p, "questDungeonsLeave").replace("<player>", p.getName()));
+                }
+            }
+        }
+    }
 }

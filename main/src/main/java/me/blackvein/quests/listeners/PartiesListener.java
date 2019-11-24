@@ -26,34 +26,64 @@ import com.alessiodp.parties.api.events.bukkit.player.BukkitPartiesPlayerPostLea
 import me.blackvein.quests.util.Lang;
 
 public class PartiesListener implements Listener {
-	
-	@EventHandler
-	public void onPartyCreate(BukkitPartiesPartyPostCreateEvent event) {
-		Bukkit.getServer().getPlayer(event.getCreator().getPlayerUUID()).sendMessage(ChatColor.YELLOW + Lang.get("questPartiesCreate"));
-	}
-	
-	@EventHandler
-	public void onPartyDeleteEvent(BukkitPartiesPartyPostDeleteEvent event) {
-		Bukkit.getServer().getPlayer(event.getCommandSender().getPlayerUUID()).sendMessage(ChatColor.RED + Lang.get("questPartiesDelete"));
-	}
-	
-	@EventHandler
-	public void onPlayerJoinEvent(BukkitPartiesPlayerPostJoinEvent event) {
-		if (event.isInvited()) {
-			Player i = Bukkit.getServer().getPlayer(event.getInviter());
-			i.sendMessage(ChatColor.GREEN + Lang.get(i, "questPartiesInvite").replace("<player>", i.getName()));
-		}
-		Player p = Bukkit.getServer().getPlayer(event.getPartyPlayer().getPlayerUUID());
-		p.sendMessage(ChatColor.GREEN + Lang.get(p, "questPartiesJoin").replace("<player>", p.getName()));
-	}
-	
-	@EventHandler
-	public void onPlayerLeaveEvent(BukkitPartiesPlayerPostLeaveEvent event) {
-		if (event.isKicked()) {
-			Player k = Bukkit.getServer().getPlayer(event.getKicker().getPlayerUUID());
-			k.sendMessage(ChatColor.RED + Lang.get(k, "questPartiesKicked").replace("<player>", k.getName()));
-		}
-		Player p = Bukkit.getServer().getPlayer(event.getPartyPlayer().getPlayerUUID());
-		p.sendMessage(ChatColor.RED + Lang.get(p, "questPartiesLeave").replace("<player>", p.getName()));
-	}
+    
+    @EventHandler
+    public void onPartyCreate(BukkitPartiesPartyPostCreateEvent event) {
+        if (event.getCreator() != null) {
+            Player p = Bukkit.getServer().getPlayer(event.getCreator().getPlayerUUID());
+            if (p != null) {
+                if (Lang.get("questPartiesCreate").length() > 0) {
+                    p.sendMessage(ChatColor.YELLOW + Lang.get("questPartiesCreate"));
+                }
+            }
+        }
+    }
+    
+    @EventHandler
+    public void onPartyDeleteEvent(BukkitPartiesPartyPostDeleteEvent event) {
+        if (event.getCommandSender() != null) {
+            Player p = Bukkit.getServer().getPlayer(event.getCommandSender().getPlayerUUID());
+            if (p != null) {
+                if (Lang.get("questPartiesDelete").length() > 0) {
+                    p.sendMessage(ChatColor.RED + Lang.get("questPartiesDelete"));
+                }
+            }
+        }
+    }
+    
+    @EventHandler
+    public void onPlayerJoinEvent(BukkitPartiesPlayerPostJoinEvent event) {
+        if (event.isInvited() && event.getInviter() != null) {
+            Player i = Bukkit.getServer().getPlayer(event.getInviter());
+            if (i != null) {
+                if (Lang.get("questPartiesInvite").length() > 0) {
+                    i.sendMessage(ChatColor.GREEN + Lang.get(i, "questPartiesInvite").replace("<player>", i.getName()));
+                }
+            }
+        }
+        Player p = Bukkit.getServer().getPlayer(event.getPartyPlayer().getPlayerUUID());
+        if (p != null) {
+            if (Lang.get("questPartiesJoin").length() > 0) {
+                p.sendMessage(ChatColor.GREEN + Lang.get(p, "questPartiesJoin").replace("<player>", p.getName()));
+            }
+        }
+    }
+    
+    @EventHandler
+    public void onPlayerLeaveEvent(BukkitPartiesPlayerPostLeaveEvent event) {
+        if (event.isKicked() && event.getKicker() != null) {
+            Player k = Bukkit.getServer().getPlayer(event.getKicker().getPlayerUUID());
+            if (k != null) {
+                if (Lang.get("questPartiesKicked").length() > 0) {
+                    k.sendMessage(ChatColor.RED + Lang.get(k, "questPartiesKicked").replace("<player>", k.getName()));
+                }
+            }
+        }
+        Player p = Bukkit.getServer().getPlayer(event.getPartyPlayer().getPlayerUUID());
+        if (p != null) {
+            if (Lang.get("questPartiesLeave").length() > 0) {
+                p.sendMessage(ChatColor.RED + Lang.get(p, "questPartiesLeave").replace("<player>", p.getName()));
+            }
+        }
+    }
 }

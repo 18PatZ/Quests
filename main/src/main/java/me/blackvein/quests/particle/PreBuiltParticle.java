@@ -36,7 +36,7 @@ public enum PreBuiltParticle {
     private static Map<String, PreBuiltParticle> FROM_IDENTIFIER = new HashMap<>();
 
     static {
-    	Stream.of(values()).forEach(p -> FROM_IDENTIFIER.put(p.identifier, p));
+        Stream.of(values()).forEach(p -> FROM_IDENTIFIER.put(p.identifier, p));
     }
 
     private String identifier;
@@ -53,7 +53,8 @@ public enum PreBuiltParticle {
         this.count = count;
     }
 
-    PreBuiltParticle(String identifier, float offsetX, float offsetY, float offsetZ, float speed, int count, Vector vector) {
+    PreBuiltParticle(String identifier, float offsetX, float offsetY, float offsetZ, float speed, int count,
+            Vector vector) {
         this(identifier, offsetX, offsetY, offsetZ, speed, count);
         this.vector = vector;
     }
@@ -100,5 +101,4 @@ public enum PreBuiltParticle {
     public static PreBuiltParticle fromIdentifier(String identifier) {
         return FROM_IDENTIFIER.get(identifier);
     }
-
 }

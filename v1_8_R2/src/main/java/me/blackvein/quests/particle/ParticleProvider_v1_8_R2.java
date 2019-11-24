@@ -9,6 +9,7 @@
  * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ****************************************************************************************************** */
+
 package me.blackvein.quests.particle;
 
 import java.util.HashMap;
@@ -44,8 +45,11 @@ public class ParticleProvider_v1_8_R2 extends ParticleProvider {
     }
 
     @Override
-    void spawnParticle(Player player, Location location, Object particle, float offsetX, float offsetY, float offsetZ, float speed, int count, int[] data) {
-        PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles((EnumParticle) particle, false, (float) location.getX(), (float) location.getY(), (float) location.getZ(), offsetX, offsetY, offsetZ, speed, count, data);
+    void spawnParticle(Player player, Location location, Object particle, float offsetX, float offsetY, float offsetZ,
+            float speed, int count, int[] data) {
+        PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles((EnumParticle) particle, false,
+                (float) location.getX(), (float) location.getY(), (float) location.getZ(), offsetX, offsetY, offsetZ,
+                speed, count, data);
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
     }
 }
